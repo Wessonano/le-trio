@@ -1,0 +1,63 @@
+---
+const pathname = Astro.url.pathname;
+---
+
+<header class="header">
+  <nav class="header-nav container">
+    <a href="/" class="header-logo">Le Trio</a>
+    <ul class="header-links">
+      <li><a href="/textes" class:list={[{ active: pathname.startsWith('/textes') }]}>Textes</a></li>
+      <li><a href="/a-propos" class:list={[{ active: pathname === '/a-propos' }]}>À propos</a></li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-sm);
+  }
+
+  .header-logo {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .header-logo:hover {
+    color: var(--color-accent);
+  }
+
+  .header-links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-md);
+  }
+
+  .header-links a {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .header-links a:hover,
+  .header-links a.active {
+    color: var(--color-accent);
+  }
+</style>

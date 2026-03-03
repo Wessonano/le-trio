@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="À propos" description="Qui sont Arnaud, Stéphane et Douce — le Trio.">
+  <section class="about">
+    <div class="content-width">
+      <h1>Le Trio</h1>
+      <p class="about-intro">
+        Trois personnes. Un hôpital psychiatrique. Une amitié qui n'aurait jamais dû exister
+        — et qui pourtant tient debout, sans filtre et sans masque.
+      </p>
+
+      <div class="profiles">
+        <article class="profile">
+          <h2>Arnaud</h2>
+          <p>
+            Développeur, observateur, un humour singulier. Celui qui écrit. Il est arrivé en psychiatrie
+            en ne voyant que des zombies autour de lui — des masques, des façades, des gens qui jouent un rôle.
+            Avec Stéphane et Douce, il a trouvé des êtres humains. Des vrais.
+          </p>
+          <p>
+            Il veut devenir médiateur de santé pair — utiliser son vécu et sa passion pour la technologie
+            au service des autres. Ce blog, c'est sa façon de raconter ce qui compte.
+          </p>
+        </article>
+
+        <article class="profile">
+          <h2>Stéphane</h2>
+          <p>
+            Un homme debout malgré une enfance difficile. Sincère, communicatif, avec un sourire
+            qui ne triche pas. Sa grande passion : les chiens. Son rêve : devenir maître-chien.
+          </p>
+          <p>
+            Ce qui frappe chez Stéphane, c'est l'absence totale de faux-semblant. Il dit ce qu'il pense,
+            il raconte ce qu'il a vécu, sans honte. Il a montré à Arnaud que la sincérité n'est pas
+            une faiblesse.
+          </p>
+        </article>
+
+        <article class="profile">
+          <h2>Douce</h2>
+          <p>
+            Mère de trois enfants, femme de valeurs. Un tatouage mi-ange mi-démon dans le dos —
+            mais ceux qui la connaissent ne voient que l'ange. Elle pèse chaque mot, chaque conseil
+            a de la valeur.
+          </p>
+          <p>
+            Douce porte bien son nom. Enfant, on lui demandait son vrai prénom parce que ça semblait
+            invraisemblable. Généreuse sans en faire un spectacle, bienveillante sans condescendance.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .about h1 {
+    text-align: center;
+    margin-bottom: var(--space-sm);
+  }
+
+  .about-intro {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .profiles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .profile {
+    padding: var(--space-md);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .profile h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-sm);
+    color: var(--color-accent);
+  }
+
+  .profile p {
+    color: var(--color-text-muted);
+  }
+
+  .profile p:last-child {
+    margin-bottom: 0;
+  }
+</style>

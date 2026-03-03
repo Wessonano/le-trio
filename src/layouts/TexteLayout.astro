@@ -1,0 +1,152 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ImageHero from '../components/ImageHero.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  about: string[];
+  image?: string;
+  imageAlt?: string;
+  prevTexte?: { slug: string; title: string } | null;
+  nextTexte?: { slug: string; title: string } | null;
+}
+
+const { title, description, date, about, image, imageAlt, prevTexte, nextTexte } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <article class="texte">
+    {image && imageAlt && <ImageHero src={image} alt={imageAlt} />}
+
+    <div class="texte-header content-width">
+      <div class="texte-meta">
+        <time datetime={date.toISOString().slice(0, 10)}>{formattedDate}</time>
+        <div class="texte-tags">
+          {about.map((name) => <span class="tag">{name}</span>)}
+        </div>
+      </div>
+      <h1>{title}</h1>
+    </div>
+
+    <div class="texte-content content-width">
+      <slot />
+    </div>
+
+    <nav class="texte-nav content-width">
+      {prevTexte ? (
+        <a href={`/textes/${prevTexte.slug}`} class="nav-prev">
+          <span class="nav-label">&larr; Précédent</span>
+          <span class="nav-title">{prevTexte.title}</span>
+        </a>
+      ) : <div />}
+      {nextTexte ? (
+        <a href={`/textes/${nextTexte.slug}`} class="nav-next">
+          <span class="nav-label">Suivant &rarr;</span>
+          <span class="nav-title">{nextTexte.title}</span>
+        </a>
+      ) : <div />}
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .texte {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .texte-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .texte-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .texte-meta time {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .texte-tags {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .texte-header h1 {
+    font-size: var(--font-size-2xl);
+    margin: 0;
+  }
+
+  .texte-content {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height);
+  }
+
+  .texte-content :global(p) {
+    margin-bottom: var(--space-sm);
+  }
+
+  .texte-content :global(strong) {
+    color: var(--color-accent);
+  }
+
+  .texte-content :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-sm);
+    margin: var(--space-md) 0;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .texte-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .nav-prev, .nav-next {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    color: var(--color-text);
+    text-decoration: none;
+    max-width: 45%;
+  }
+
+  .nav-next {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  .nav-label {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .nav-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+  }
+
+  .nav-prev:hover .nav-title,
+  .nav-next:hover .nav-title {
+    color: var(--color-accent);
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<div class="hero-image image-width">
+  <img src={src} alt={alt} width="960" height="540" loading="eager" />
+</div>
+
+<style>
+  .hero-image {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+</style>

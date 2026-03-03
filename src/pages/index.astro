@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TexteCard from '../components/TexteCard.astro';
+import { getCollection } from 'astro:content';
+
+const textes = (await getCollection('textes', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Accueil" description="Le Trio — Arnaud, Stéphane et Douce. Une amitié vraie, née en psychiatrie.">
+  <section class="hero">
+    <div class="content-width">
+      <h1>Le Trio</h1>
+      <p class="hero-subtitle">Une amitié vraie, née là où personne ne s'y attend.</p>
+      <p class="hero-description">
+        En psychiatrie, on ne choisit pas ses voisins de couloir. Parfois, on les adopte.
+        Ici, Arnaud raconte l'histoire de trois personnes qui se sont trouvées — et ce que ça change
+        quand quelqu'un vous voit tel que vous êtes.
+      </p>
+    </div>
+  </section>
+
+  {textes.length > 0 && (
+    <section class="latest">
+      <div class="container">
+        <h2>Derniers textes</h2>
+        <div class="texte-grid">
+          {textes.map((texte) => (
+            <TexteCard
+              title={texte.data.title}
+              description={texte.data.description}
+              date={texte.data.date}
+              slug={texte.id.replace(/\.md$/, '')}
+              image={texte.data.image}
+              imageAlt={texte.data.imageAlt}
+              about={texte.data.about}
+            />
+          ))}
+        </div>
+        <div class="see-all">
+          <a href="/textes">Voir tous les textes &rarr;</a>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--space-xl) var(--space-sm);
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-lg);
+    color: var(--color-accent);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-description {
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .latest {
+    padding: 0 var(--space-sm) var(--space-xl);
+  }
+
+  .latest h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-md);
+    text-align: center;
+  }
+
+  .texte-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    max-width: var(--max-width-image);
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .texte-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .see-all {
+    text-align: center;
+    margin-top: var(--space-md);
+  }
+
+  .see-all a {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+  }
+</style>

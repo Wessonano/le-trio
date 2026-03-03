@@ -1,0 +1,25 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <p>Le Trio &mdash; Arnaud, Stéphane &amp; Douce &mdash; {year}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-md) 0;
+    margin-top: var(--space-xl);
+    text-align: center;
+  }
+
+  .footer p {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+</style>

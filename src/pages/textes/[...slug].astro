@@ -1,0 +1,34 @@
+---
+import TexteLayout from '../../layouts/TexteLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allTextes = (await getCollection('textes', ({ data }) => !data.draft))
+    .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+
+  return allTextes.map((texte, index) => ({
+    params: { slug: texte.id.replace(/\.md$/, '') },
+    props: {
+      texte,
+      prevTexte: index > 0 ? { slug: allTextes[index - 1].id.replace(/\.md$/, ''), title: allTextes[index - 1].data.title } : null,
+      nextTexte: index < allTextes.length - 1 ? { slug: allTextes[index + 1].id.replace(/\.md$/, ''), title: allTextes[index + 1].data.title } : null,
+    },
+  }));
+}
+
+const { texte, prevTexte, nextTexte } = Astro.props;
+const { Content } = await texte.render();
+---
+
+<TexteLayout
+  title={texte.data.title}
+  description={texte.data.description}
+  date={texte.data.date}
+  about={texte.data.about}
+  image={texte.data.image}
+  imageAlt={texte.data.imageAlt}
+  prevTexte={prevTexte}
+  nextTexte={nextTexte}
+>
+  <Content />
+</TexteLayout>

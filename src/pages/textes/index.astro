@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TexteCard from '../../components/TexteCard.astro';
+import { getCollection } from 'astro:content';
+
+const textes = (await getCollection('textes', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Textes" description="Tous les textes du Trio — récits d'amitié, de résilience et de sincérité.">
+  <section class="textes-page">
+    <div class="container">
+      <h1>Textes</h1>
+      <p class="page-subtitle">Récits d'amitié, de résilience et de sincérité.</p>
+
+      <div class="texte-grid">
+        {textes.map((texte) => (
+          <TexteCard
+            title={texte.data.title}
+            description={texte.data.description}
+            date={texte.data.date}
+            slug={texte.id.replace(/\.md$/, '')}
+            image={texte.data.image}
+            imageAlt={texte.data.imageAlt}
+            about={texte.data.about}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .textes-page {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .textes-page h1 {
+    text-align: center;
+    margin-bottom: var(--space-xs);
+  }
+
+  .page-subtitle {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+  }
+
+  .texte-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    max-width: var(--max-width-image);
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .texte-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
